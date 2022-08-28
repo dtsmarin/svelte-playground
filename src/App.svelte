@@ -1,85 +1,76 @@
 <script>
-  // import {onMount} from "svelte";
-  import {Motion, useTransform, useMotionValue} from 'svelte-motion';
-  let area;
-	let value = 0;
-	const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const map = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
-   const input = [0, 127];
-  $: xText = Math.round(map($x, -75, 175, 0, 127))||0;
-  // $: yText = Math.round($y)||0;
-  $: yText = Math.round(map($y, 125, -125, 0, 127))||0;
+  import { Motion, useTransform, useMotionValue } from 'svelte-motion'
+  let area
+  let value = 0
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const input = [0, 127]
+  const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
+  const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
+  $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
+  $: yText = clamp(Math.round(map($y, 125, -125, 0, 127)), 0, 127) || 0
 </script>
 
 <main>
-  <div class="background" >	
-    <div class="drag-area" bind:this={area}  />
-    <Motion drag style={{x, y}}
-    dragConstraints={{current:area}}
-    let:motion>
-      <div id="handle" class="box center unselectable" 
-          
-           style="--top:{value}" 		 use:motion >
-  
-    </div>
+  <div class="background">
+    <div class="drag-area" bind:this={area} />
+    <Motion drag style={{ x, y }} dragConstraints={{ current: area }} let:motion>
+      <div class="box center unselectable" use:motion />
     </Motion>
-     {xText},{yText}
+    <div class="unselectable label">{xText},{yText}</div>
   </div>
-  
 </main>
 
 <style>
-	:global(*) {
-  box-sizing: border-box;
-}
-	.background{
-		background-color: #231D2A;
-		color: rgba(255, 255, 255, 0.8);
-		display:flex;
-		flex-direction:column;
-		height:100%;
-		justify-content:center;
-		align-items:center;
-		touch-action:none;
-	}
-
-	.box {
-  background: white;
-  width: 50px;
-  height: 50px;
-  position: absolute;
-	opacity: 0.5;
-  border-radius: 50%;
-  border-style: solid;
-  border-width: 2px;
-	box-shadow: 0px 0px 0px 8px rgba(0,0,0,1);
-/*   top: calc(50% - 150px / 2); */
-/* 	top: calc(50% - 150px / 2); */
-	top: --top;
-  left: calc(50% - 150px / 2);
-}
-	.drag-area {
-  opacity: 0.2;
-  background: white;
-  position: absolute;
-  width: 300px;
-  height: 300px;
-  border-radius: 20px;
-  top: calc(50% - 150px);
-  left: calc(50% - 150px);
-}
-	.unselectable {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
+  :global(*) {
+    box-sizing: border-box;
+  }
+  .background {
+    background-color: #231d2a;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+  }
+  .box {
+    background: white;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    opacity: 0.5;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 2px;
+    box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 1);
+  }
+  .drag-area {
+    opacity: 0.2;
+    background: white;
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 20px;
+  }
+  .unselectable {
     user-select: none;
-}
-	.center {
-    justify-content:center;
-		align-items:center;
-		display:flex;
-	}
+  }
+  .center {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }
+  .background > .label {
+    font-size: 1.1em;
+    margin-left: calc(300px - 4em);
+    margin-top: calc(300px - 1.8em);
+    background-color: transparent;
+    opacity: 0.6;
+    position: absolute;
+    direction: rtl;
+    transform-origin: top right;
+    text-align: right;
+    width: 40px;
+  }
 </style>
