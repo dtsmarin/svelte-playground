@@ -14,7 +14,15 @@
 <main>
   <div class="background">
     <div class="drag-area" bind:this={area} />
-    <Motion drag="y" dragConstraints={{ current: area }} dragElastic={0} let:motion>
+    <Motion
+      drag
+      style={{ y }}
+      dragConstraints={{ current: area }}
+      dragDirectionLock={true}
+      dragMomentum={false}
+      dragElastic={false}
+      let:motion
+    >
       <div class="box center unselectable" use:motion />
     </Motion>
     <div class="label">{yText}</div>
