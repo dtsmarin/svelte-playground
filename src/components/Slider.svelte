@@ -1,14 +1,37 @@
 <script>
   import { Motion, useTransform, useMotionValue } from 'svelte-motion'
-  let area
-  let value = 0
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const input = [0, 127]
+  import { onMount } from 'svelte'
   const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
-  $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
+  let area
+  export let value
+  export let color
+  let converted = map(value, 0, 127, 150, -150)
+  let y = useMotionValue(converted)
+  let vavalueb
+  const input = [0, 127]
+
+  // $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
+  // map(vavalue, 125, -125, 75, 325)
   $: yText = clamp(Math.round(map($y, 125, -125, 0, 127)), 0, 127) || 0
+  // $: vavalue = map($y, 125, -125, 0, 127) || 0
+  // $: vavalueb = map($y, 150, -150, 0, 127)
+  $: vavalueb = $y
+  onMount(() => {
+    // let vavalueb = map($y, 150, -150, 150, -150)
+    // map(vavalueb, 0, 127, 50, 350)
+    // vavalueb = 150
+    vavalueb = converted
+    yText = Math.round(map(converted, 150, -150, 0, 127))
+    // console.log(vavalueb)
+    // console.log(y)
+    console.log(y)
+  })
+
+  function handleTouch() {
+    console.log(y)
+    console.log(vavalueb)
+  }
 </script>
 
 <main>
@@ -23,17 +46,17 @@
       dragElastic={false}
       let:motion
     >
-      <div class="box center unselectable" use:motion />
+      <div class="box center unselectable" use:motion on:click={handleTouch}>
+        <div class="label">{yText}</div>
+      </div>
     </Motion>
-    <div class="label">{yText}</div>
+    <div class="sliderbar" style="--minvalue:{map(vavalueb, 150, -150, 50, 350)}px;  background-color:{color}" />
   </div>
 </main>
 
 <style>
-  :global(*) {
-    box-sizing: border-box;
-  }
   .background {
+    position: relative;
     background-color: #231d2a;
     display: flex;
     flex-direction: column;
@@ -44,15 +67,16 @@
   }
   .box {
     /* background: white; */
+    z-index: 2;
     width: 70px;
     height: 50px;
     position: absolute;
-    opacity: 0.2;
+    opacity: 1;
     border-radius: 9px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: #000000;
-    /* box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 1); */
+    /* border-style: solid; */
+    /* border-width: 5px; */
+    /* border-color: #000000; */
+    box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.2);
   }
   .drag-area {
     /* opacity: 0.2; */
@@ -71,16 +95,25 @@
     align-items: center;
     display: flex;
   }
-  .background > .label {
+  .background > .sliderbar {
+    z-index: 1;
+    position: absolute;
+    width: 70px;
+    border-radius: 9px;
+    opacity: 0.25;
+    background-color: red;
+    bottom: -175px;
+    /* left: 25px; */
+    /* --initial: 200px */
+    height: var(--minvalue);
+  }
+  .box > .label {
+    /* z-index: -3; */
     font-size: 1.1em;
     margin-left: 0px;
-    margin-top: calc(300px - 1.8em);
     background-color: transparent;
-    opacity: 0.4;
+    opacity: 0.75;
     position: absolute;
-    /* direction: rtl; */
-    /* transform-origin: top right; */
-    /* text-align: right; */
     width: 40px;
   }
 </style>

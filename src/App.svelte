@@ -29,23 +29,19 @@
   </div>
   <div class="controllergrid">
     <div class="fadergrid">
-      <Slider />
-      <Slider />
-      <Slider />
+      <Slider value={127} color="#23668B" />
+      <Slider value={10} color="#EBFF00" />
+      <Slider value={50} color="#00DBA6" />
     </div>
     <XyPad />
   </div>
 </div>
 
 <style>
-  .grid {
-    border: solid 1px;
-    /* touch-action: none; */
-    /* display: grid; */
-
-    /* grid-template-columns: repeat(auto-fit, minmax(50px, 1fr)); */
-    /* gap: 60px; */
+  :global(body) {
+    background-color: black;
   }
+
   .controllergrid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -56,9 +52,12 @@
   .fadergrid {
     touch-action: none;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    /* grid-template-columns: repeat(5, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    grid-gap: 0px;
+
     /* gap: 70px; */
-    margin-left: 0px;
+    /* margin-left: 0px; */
     /* margin-right: 150px; */
   }
   .buttongrid {
