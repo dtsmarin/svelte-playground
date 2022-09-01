@@ -43,23 +43,25 @@
     touch-action: none;
   }
   .box {
-    background: white;
+    /* background: white; */
     width: 70px;
     height: 50px;
     position: absolute;
-    opacity: 0.5;
-    border-radius: 5px;
+    opacity: 0.2;
+    border-radius: 9px;
     border-style: solid;
-    border-width: 2px;
-    box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 1);
+    border-width: 5px;
+    border-color: #000000;
+    /* box-shadow: 0px 0px 0px 5px rgba(0, 0, 0, 1); */
   }
   .drag-area {
-    opacity: 0.2;
-    background: white;
+    /* opacity: 0.2; */
+    background: #434343;
     position: absolute;
     width: 70px;
     height: 350px;
-    border-radius: 10px;
+    border-radius: 9px;
+    outline: solid 2px #9c9c9c;
   }
   .unselectable {
     user-select: none;
