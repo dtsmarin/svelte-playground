@@ -15,7 +15,7 @@
     width: 150px;
     height: 100px;
     border-radius: 15px;
-    outline: solid 2px #9c9c9c;
+    border: solid 2px #9c9c9c;
     position: relative;
     text-align: center;
     display: flex;

@@ -29,9 +29,10 @@
   </div>
   <div class="controllergrid">
     <div class="fadergrid">
-      <Slider value={127} color="#23668B" />
-      <Slider value={10} color="#EBFF00" />
-      <Slider value={50} color="#00DBA6" />
+      <Slider value={100} color="#23668B" />
+      <Slider value={15} color="#EBFF00" />
+      <Slider value={52} color="#00DBA6" />
+      <Slider value={52} color="#9347AD" />
     </div>
     <XyPad />
   </div>
