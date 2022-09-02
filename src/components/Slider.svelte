@@ -26,8 +26,11 @@
     vavalueb = converted
     yText = Math.round(map(converted, 150, -150, 0, 127))
     // console.log(vavalueb)
-    // console.log(y)
-    // console.log(y)
+    console.log(y)
+    console.log(y)
+    // use:svelteHammer.pan={{}}
+    //     on:panup={handleTouch}
+    //     on:pandown={handleTouch}
   })
 
   function handleTouch() {
@@ -54,14 +57,9 @@
       dragMomentum={false}
       dragElastic={false}
       let:motion
+      whileDrag={handleTouch}
     >
-      <div
-        class="box center unselectable"
-        use:motion
-        use:svelteHammer.pan={{}}
-        on:panup={handleTouch}
-        on:pandown={handleTouch}
-      >
+      <div class="box center unselectable" use:motion>
         <div class="label">{yText}</div>
       </div>
     </Motion>
@@ -69,7 +67,7 @@
     <div
       class="defaultpip"
       style="--startpip:{map(value, 0, 127, -150, 150)}px"
-      use:svelteHammer.tap={{ event: 'tap', taps: 2 }}
+      use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
       on:tap={handleTap}
     />
   </div>
@@ -85,6 +83,7 @@
     justify-content: center;
     align-items: center;
     touch-action: none;
+    --webkit-touch-action: none;
   }
   .box {
     /* background: white; */
@@ -107,6 +106,8 @@
     height: 350px;
     border-radius: 9px;
     border: solid 2px #9c9c9c;
+    touch-action: none;
+    --webkit-touch-action: none;
   }
   .unselectable {
     user-select: none;
@@ -127,17 +128,19 @@
     /* left: 25px; */
     /* --initial: 200px */
     height: var(--minvalue);
+    touch-action: none;
+    --webkit-touch-action: none;
   }
   .background > .defaultpip {
     z-index: 1;
     position: absolute;
-    width: 35px;
+    width: 33px;
     border-radius: 5px 0px 0px 5px;
-    opacity: 0.1;
+    opacity: 0.2;
     background-color: green;
     bottom: var(--startpip);
     left: 50%;
-    height: 5px;
+    height: 10px;
   }
   .box > .label {
     /* z-index: -3; */
@@ -147,5 +150,7 @@
     opacity: 0.75;
     position: absolute;
     width: 40px;
+    touch-action: none;
+    --webkit-touch-action: none;
   }
 </style>

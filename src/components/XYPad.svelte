@@ -1,14 +1,20 @@
 <script>
   import { Motion, useTransform, useMotionValue } from 'svelte-motion'
+  import { onMount } from 'svelte'
   let area
   let value = 0
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
+  let x = useMotionValue(0)
+  let y = useMotionValue(0)
   const input = [0, 127]
   const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
   $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
   $: yText = clamp(Math.round(map($y, 125, -125, 0, 127)), 0, 127) || 0
+
+  onMount(() => {
+    x = useMotionValue(-125)
+    y = useMotionValue(125)
+  })
 </script>
 
 <main>
@@ -26,10 +32,12 @@
     box-sizing: border-box;
   }
   .background {
-    background-color: #231d2a;
-    display: flex;
+    /* background-color: #231d2a; */
+    display: inline-flex;
     flex-direction: column;
-    height: 100%;
+    /* height: 0%; */
+    /* position: relative; */
+    /* opacity: 1; */
     justify-content: center;
     align-items: center;
     touch-action: none;
@@ -48,7 +56,6 @@
   .drag-area {
     opacity: 0.2;
     background: white;
-    position: absolute;
     width: 300px;
     height: 300px;
     border-radius: 20px;

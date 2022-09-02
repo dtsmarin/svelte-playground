@@ -14,5 +14,8 @@ declare namespace svelte.JSX {
     onpanstart?: (event: any) => any;
     ondoubletap?: (event: any) => any;
     ontap?: (event: any) => any;
+    
+
   }
 }
+
