@@ -31,12 +31,9 @@
     margin: -2px -2px;
     padding: -2px -2px;
   }
-  /* .button:active {
-    z-index: initial;
-    transition: 0.5s all;
-    background-color: #222222;
-  } */
+
   .buttontext {
+    z-index: initial;
     margin: 10px;
     font-weight: bold;
     user-select: none;

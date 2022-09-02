@@ -19,22 +19,9 @@
     { name: 'Tremolo', color: '#00634B' },
   ]
 
-  // let car = ''
   let selectedArt = null
 
   $: console.log('Articulation selected', selectedArt)
-
-  function activeArticulation(i) {
-    // current = []
-    // current = [...current, current.length + i]
-    // console.log(i)
-    // let buttonwrap = document.getElementsByClassName('buttonwrap')
-    // let button = document.getElementById(`button${current}`)
-    // selected = button
-    // console.log(button)
-    // button.classList.toggle('selected')
-    //  on:click={() => activeArticulation(i)}
-  }
 </script>
 
 <div class="header">Vln 1 Longs [SSS] - (SSS Vln1 Longs.dpartmap)</div>
