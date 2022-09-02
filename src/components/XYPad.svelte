@@ -33,6 +33,7 @@
   }
   .background {
     /* background-color: #231d2a; */
+
     display: inline-flex;
     flex-direction: column;
     /* height: 0%; */
@@ -54,11 +55,12 @@
     box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 1);
   }
   .drag-area {
-    opacity: 0.2;
-    background: white;
+    /* opacity: 0.2; */
+    background: #434343;
     width: 300px;
     height: 300px;
     border-radius: 20px;
+    border: solid 2px #9c9c9c;
   }
   .unselectable {
     user-select: none;

@@ -26,8 +26,8 @@
     vavalueb = converted
     yText = Math.round(map(converted, 150, -150, 0, 127))
     // console.log(vavalueb)
-    console.log(y)
-    console.log(y)
+    // console.log(y)
+    // console.log(y)
     // use:svelteHammer.pan={{}}
     //     on:panup={handleTouch}
     //     on:pandown={handleTouch}
@@ -43,35 +43,35 @@
     vavalueb = converted
     y = useMotionValue(converted)
     yText = Math.round(map(converted, 150, -150, 0, 127))
+    //here will transmit to socket.IO
   }
 </script>
 
-<main>
-  <div class="background">
-    <div class="drag-area" bind:this={area} />
-    <Motion
-      drag
-      style={{ y }}
-      dragConstraints={{ current: area }}
-      dragDirectionLock={true}
-      dragMomentum={false}
-      dragElastic={false}
-      let:motion
-      whileDrag={handleTouch}
-    >
-      <div class="box center unselectable" use:motion>
-        <div class="label">{yText}</div>
-      </div>
-    </Motion>
-    <div class="sliderbar" style="--minvalue:{map(vavalueb, 150, -150, 50, 350)}px;  background-color:{color}" />
-    <div
-      class="defaultpip"
-      style="--startpip:{map(value, 0, 127, -150, 150)}px"
-      use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
-      on:tap={handleTap}
-    />
-  </div>
-</main>
+<div class="background">
+  <div class="drag-area" bind:this={area} />
+  <Motion
+    drag
+    style={{ y }}
+    dragConstraints={{ current: area }}
+    dragDirectionLock={true}
+    dragMomentum={false}
+    dragElastic={false}
+    let:motion
+    whileDrag={handleTouch}
+    whileTap={{ backgroundColor: '#222222' }}
+  >
+    <div class="box center unselectable" use:motion>
+      <div class="label">{yText}</div>
+    </div>
+  </Motion>
+  <div class="sliderbar" style="--minvalue:{map(vavalueb, 150, -150, 50, 349)}px;  background-color:{color}" />
+  <div
+    class="defaultpip"
+    style="--startpip:{map(value, 0, 127, 20, 320)}px"
+    use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
+    on:tap={handleTap}
+  />
+</div>
 
 <style>
   .background {
@@ -80,32 +80,39 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    border-radius: 9px;
     justify-content: center;
     align-items: center;
     touch-action: none;
     --webkit-touch-action: none;
+    border: solid 2px #9c9c9c;
   }
   .box {
     /* background: white; */
     z-index: 2;
-    width: 68px;
+    /* margin-left: 6px; */
+    /* margin-right: 6px; */
+    width: 70px;
     height: 50px;
     position: absolute;
     opacity: 1;
-    border-radius: 9px;
+    border-radius: 8px;
+    /* align-self: center; */
+    /* margin-top: -0.5px; */
     /* border-style: solid; */
     /* border-width: 5px; */
     /* border-color: #000000; */
-    box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 0.4);
   }
   .drag-area {
+    box-sizing: content-box;
     /* opacity: 0.2; */
     background: #434343;
-    position: absolute;
+    /* position: absolute; */
     width: 70px;
     height: 350px;
     border-radius: 9px;
-    border: solid 2px #9c9c9c;
+
     touch-action: none;
     --webkit-touch-action: none;
   }
@@ -120,11 +127,12 @@
   .background > .sliderbar {
     z-index: 1;
     position: absolute;
-    width: 66px;
-    border-radius: 9px;
+    width: 70px;
+    border-radius: 8px;
     opacity: 0.25;
+
     /* background-color: red; */
-    bottom: -175px;
+    bottom: 0px;
     /* left: 25px; */
     /* --initial: 200px */
     height: var(--minvalue);
@@ -134,9 +142,9 @@
   .background > .defaultpip {
     z-index: 1;
     position: absolute;
-    width: 33px;
+    width: 35px;
     border-radius: 5px 0px 0px 5px;
-    opacity: 0.2;
+    opacity: 0.25;
     background-color: green;
     bottom: var(--startpip);
     left: 50%;

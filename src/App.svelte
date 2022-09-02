@@ -2,6 +2,7 @@
   import XyPad from './components/XYPad.svelte'
   import Slider from './components/Slider.svelte'
   import Button from './components/Button.svelte'
+
   let cats = [
     { name: 'Legato', color: '#59BB1D' },
     { name: 'Staccato', color: '#9347AD' },
@@ -9,22 +10,40 @@
     { name: 'Sul Tasto', color: '#00DBA6' },
     { name: 'Con Sord', color: '#00C2FF' },
     { name: 'Tremolo', color: '#EBFF00' },
-    { name: 'Tremolo', color: '#FF7A00' },
+    { name: 'Long CS Blend', color: '#FF7A00' },
+    { name: 'Long Harmonics', color: '#00634B' },
+    { name: 'Marcato Attack', color: '#23668B' },
+    { name: 'Trill (Major 2nd)', color: '#FF00D6' },
+    { name: 'Trill (Major 3rd)', color: '#30B700' },
+    { name: 'Trill (Minor 2nd)', color: '#BB1D1D' },
     { name: 'Tremolo', color: '#00634B' },
-    { name: 'Tremolo', color: '#23668B' },
-    { name: 'Tremolo', color: '#FF00D6' },
-    { name: 'Tremolo', color: '#EBFF00' },
-    { name: 'Tremolo', color: '#EBFF00' },
-    { name: 'Tremolo', color: '#EBFF00' },
-    { name: 'Tremolo', color: '#EBFF00' },
   ]
+
+  // let car = ''
+  let selectedArt = null
+
+  $: console.log('Articulation selected', selectedArt)
+
+  function activeArticulation(i) {
+    // current = []
+    // current = [...current, current.length + i]
+    // console.log(i)
+    // let buttonwrap = document.getElementsByClassName('buttonwrap')
+    // let button = document.getElementById(`button${current}`)
+    // selected = button
+    // console.log(button)
+    // button.classList.toggle('selected')
+    //  on:click={() => activeArticulation(i)}
+  }
 </script>
 
 <div class="header">Vln 1 Longs [SSS] - (SSS Vln1 Longs.dpartmap)</div>
 <div class="grid">
   <div class="buttongrid">
     {#each cats as { name, color }, i}
-      <Button {name} {color} />
+      <div class="buttonwrap" class:selected={i === selectedArt} on:click={() => (selectedArt = i)}>
+        <Button {name} {color} />
+      </div>
     {/each}
   </div>
   <div class="controllergrid">
@@ -32,8 +51,9 @@
       <Slider value={100} color="#23668B" />
       <Slider value={15} color="#EBFF00" />
       <Slider value={52} color="#00DBA6" />
-      <Slider value={52} color="#9347AD" />
+      <Slider value={34} color="#9347AD" />
     </div>
+    <!-- <div class="xypad" /> -->
     <XyPad />
   </div>
 </div>
@@ -41,10 +61,7 @@
 <style>
   :global(body) {
     background-color: #000000;
-    /* touch-action: none; */
     margin: 0;
-    /* touch-action: pinch-zoom; */
-    /* --webkit-touch-action: none; */
   }
 
   .header {
@@ -54,28 +71,16 @@
     display: flex;
     background-color: black;
     font-size: 20px;
-
+    font-weight: bold;
     justify-content: center;
     align-items: center;
     text-align: center;
   }
   .grid {
-    /* display: grid; */
-    /* grid-template-areas: 'top top' 'bottom1 bottom2'; */
-    /* grid-template-columns: 4fr 4fr; */
-    /* grid-template-rows: 5fr 5fr; */
     display: flex;
     height: calc(100vh - 35px);
   }
-
   .controllergrid {
-    /* display: grid; */
-    /* grid-template-columns: 1fr 1fr; */
-    /* grid-template-rows: 2fr 2fr; */
-    /* grid-auto-flow: row; */
-
-    /* grid-gap: 0rem; */
-    /* grid-column: 3; */
     width: 300px;
     height: calc(100vh - 40px);
     display: flex;
@@ -84,54 +89,31 @@
   }
   .fadergrid {
     touch-action: none;
-    /* display: flex; */
-    /* gap: 0px; */
-    /* display: flex; */
-    /* flex-direction: column; */
-    /* grid-template-columns: repeat(5, 1fr); */
-    /* grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); */
-    /* grid-area: 'top'; */
-    /* grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); */
-    /* flex-direction: column; */
-    /* grid-template-columns: repeat(4, 1fr); */
-    /* grid-template-columns: subgrid; */
-    /* grid-column: 1 / 5; */
-    /* grid-row: 1 / 5; */
-    /* grid-gap: 0px; */
-    /* grid-row: 5 / 5; */
-    /* grid-column: 1 / 2; */
-    /* gap: 70px; */
-    /* margin-left: 0px; */
-    /* margin-right: 150px; */
-    /* height: 100px; */
-    /* display: flex; */
-    /* grid-column-start: 3; */
-    /* justify-items: center; */
     display: flex;
-    /* flex-flow: column wrap; */
-    /* justify-content: space-evenly; */
-    /* align-items: stretch; */
-    column-gap: 70px;
-    /* margin: 50px; */
-    /* grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); */
+    justify-content: space-evenly;
   }
   .buttongrid {
     touch-action: none;
-    /* margin-right: 150px; */
-    /* display: flex; */
-    /* flex-direction: row; */
-    /* flex-shrink: 0; */
-    /* flex-wrap: wrap-reverse; */
-    /* flex-flow: column wrap; */
-    /* justify-content: flex-start; */
-    /* flex-direction: column-reverse; */
-
-    width: calc(100% - 400px);
+    width: calc(100% - 300px);
     height: 100%;
     display: flex;
-    align-items: flex-end;
     justify-content: flex-start;
     flex-wrap: wrap-reverse;
     align-content: flex-start;
+    z-index: 10;
+  }
+  .buttonwrap {
+    z-index: initial;
+    margin: 15px;
+    position: relative;
+  }
+
+  .selected {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 13px;
+    transition: 0.5s all;
+    box-shadow: 0px 0px 0px 2px rgba(119, 255, 0, 1);
+    white-space: nowrap;
+    overflow: visible;
   }
 </style>
