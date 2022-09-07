@@ -2,11 +2,14 @@
   import { Motion, useTransform, useMotionValue } from 'svelte-motion'
   import { onMount } from 'svelte'
   import svelteHammer from 'svelte-hammer'
+  import { slider0, slider1, slider2, slider3, slider4, slider5 } from './slidervalues'
+  import { loop_guard } from 'svelte/internal'
   const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
   let area
   export let value
   export let color
+  export let index
   let converted = map(value, 0, 127, 150, -150)
   let y = useMotionValue(converted)
   let vavalueb
@@ -28,22 +31,35 @@
     // console.log(vavalueb)
     // console.log(y)
     // console.log(y)
-    // use:svelteHammer.pan={{}}
-    //     on:panup={handleTouch}
-    //     on:pandown={handleTouch}
   })
 
   function handleTouch() {
     // console.log(y)
     console.log(vavalueb)
+    // slider0.update(y)
   }
 
-  function handleTap() {
-    console.log('You tapped the pip!')
+  // slider0.set(Math.round(map($y, 150, -150, 0, 127)))
+
+  function handleTap(index) {
+    // console.log('You tapped the pip!')
     vavalueb = converted
     y = useMotionValue(converted)
     yText = Math.round(map(converted, 150, -150, 0, 127))
     //here will transmit to socket.IO
+    updateStores(index, converted)
+  }
+
+  function updateStores(index, y) {
+    if (index === 0) {
+      slider0.set(Math.round(map(y, 150, -150, 0, 127)))
+    } else if (index === 1) {
+      slider1.set(Math.round(map(y, 150, -150, 0, 127)))
+    } else if (index === 2) {
+      slider2.set(Math.round(map(y, 150, -150, 0, 127)))
+    } else if (index === 3) {
+      slider3.set(Math.round(map(y, 150, -150, 0, 127)))
+    }
   }
 </script>
 
@@ -58,6 +74,9 @@
     dragElastic={false}
     let:motion
     whileDrag={handleTouch}
+    onDrag={() => {
+      updateStores(index, $y)
+    }}
     whileTap={{ backgroundColor: '#222222' }}
   >
     <div class="box center unselectable" use:motion>
@@ -69,7 +88,9 @@
     class="defaultpip"
     style="--startpip:{map(value, 0, 127, 20, 320)}px"
     use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
-    on:tap={handleTap}
+    on:tap={() => {
+      handleTap(index)
+    }}
   />
 </div>
 
@@ -88,20 +109,12 @@
     border: solid 2px #9c9c9c;
   }
   .box {
-    /* background: white; */
     z-index: 2;
-    /* margin-left: 6px; */
-    /* margin-right: 6px; */
     width: 70px;
     height: 50px;
     position: absolute;
     opacity: 1;
     border-radius: 8px;
-    /* align-self: center; */
-    /* margin-top: -0.5px; */
-    /* border-style: solid; */
-    /* border-width: 5px; */
-    /* border-color: #000000; */
     box-shadow: inset 0px 0px 0px 2px rgba(0, 0, 0, 0.4);
   }
   .drag-area {
@@ -112,7 +125,6 @@
     width: 70px;
     height: 350px;
     border-radius: 9px;
-
     touch-action: none;
     --webkit-touch-action: none;
   }
@@ -130,11 +142,7 @@
     width: 70px;
     border-radius: 8px;
     opacity: 0.25;
-
-    /* background-color: red; */
     bottom: 0px;
-    /* left: 25px; */
-    /* --initial: 200px */
     height: var(--minvalue);
     touch-action: none;
     --webkit-touch-action: none;
@@ -144,6 +152,8 @@
     position: absolute;
     width: 35px;
     border-radius: 5px 0px 0px 5px;
+    border: 1px solid black;
+    border-right: 0;
     opacity: 0.25;
     background-color: green;
     bottom: var(--startpip);
@@ -151,7 +161,6 @@
     height: 10px;
   }
   .box > .label {
-    /* z-index: -3; */
     font-size: 1.1em;
     margin-left: 0px;
     background-color: transparent;

@@ -2,7 +2,8 @@
   import XyPad from './components/XYPad.svelte'
   import Slider from './components/Slider.svelte'
   import Button from './components/Button.svelte'
-
+  import { slider0, slider1, slider2 } from './components/slidervalues'
+  import faders from './ccdata'
   let cats = [
     { name: 'Legato', color: '#59BB1D' },
     { name: 'Staccato', color: '#9347AD' },
@@ -20,8 +21,16 @@
   ]
 
   let selectedArt = null
-
+  let currentvalue
+  let onValueChange = ''
   $: console.log('Articulation selected', selectedArt)
+
+  function transmitCurrentValues() {
+    // console.log('Yo' + currentvalue)
+    console.log(`Fader 1 ${$slider0} Fader 2 ${$slider1} Fader 3 ${$slider2}`)
+  }
+
+  // onValueChange={() => transmitCurrentValues(currentvalue)}
 </script>
 
 <div class="header">Vln 1 Longs [SSS] - (SSS Vln1 Longs.dpartmap)</div>
@@ -34,16 +43,24 @@
     {/each}
   </div>
   <div class="controllergrid">
+    <div class="transmitbutton" on:click={transmitCurrentValues}>Transmit current values</div>
     <div class="fadergrid">
-      <Slider value={100} color="#23668B" />
-      <Slider value={15} color="#EBFF00" />
-      <Slider value={52} color="#00DBA6" />
-      <Slider value={34} color="#9347AD" />
+      {#each faders as { cc, name, range, init, clr }, i}
+        {#if cc != undefined}
+          <Slider value={init} color={clr} index={i} />
+        {/if}
+      {/each}
     </div>
-    <!-- <div class="xypad" /> -->
-    <XyPad />
+    <!-- <XyPad /> -->
+    {#each faders as { xy, name, range, clr }, i}
+      {#if xy != undefined}
+        <XyPad />
+      {/if}
+    {/each}
   </div>
 </div>
+
+<div>{$slider0} {$slider1}</div>
 
 <style>
   :global(body) {
@@ -77,7 +94,7 @@
   .fadergrid {
     touch-action: none;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-end;
   }
   .buttongrid {
     touch-action: none;
@@ -87,20 +104,41 @@
     justify-content: flex-start;
     flex-wrap: wrap-reverse;
     align-content: flex-start;
-    z-index: 10;
+    /*  margin: 5px; */
   }
   .buttonwrap {
-    z-index: initial;
-    margin: 15px;
-    position: relative;
+    /* margin: 5px; */
+    padding: 10px;
+
+    /* position: relative; */
   }
 
+  .transmitbutton {
+    box-sizing: content-box;
+    background-color: #434343;
+    width: 150px;
+    height: 50px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: solid 2px #9c9c9c;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+    user-select: none;
+    position: relative;
+    -webkit-user-select: none;
+  }
+  .transmitbutton:active {
+    background-color: #232323;
+  }
   .selected {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(193, 17, 17, 1);
     border-radius: 13px;
     transition: 0.5s all;
-    box-shadow: 0px 0px 0px 2px rgba(119, 255, 0, 1);
-    white-space: nowrap;
-    overflow: visible;
+    /* box-shadow: 0px 0px 0px 2px rgba(119, 255, 0, 1); */
+    /* white-space: nowrap; */
+    /* overflow: visible; */
   }
 </style>

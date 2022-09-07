@@ -1,30 +1,37 @@
-let cc = [
+let faders = [
   {
     cc: '1',
     n: 'Modulation',
-    r: [
-      { i: '0', n: 'pp', v: '10' },
-      { i: '1', n: 'mf', v: '56' },
-    ],
+    r: [],
+    init: '100',
     clr: '#60DF21',
   },
   {
     cc: '11',
     n: 'Expression',
-    r: [
-      { i: '0', n: '10%', v: '10' },
-      { i: '1', n: '50%', v: '56' },
-    ],
+    r: [],
+    init: '80',
     clr: '#DF4C21',
   },
   {
     cc: '2',
     n: 'Breath',
     r: [
-      { i: '0', n: '10%', v: '10' },
-      { i: '1', n: '50%', v: '56' },
+      { i: '0', n: 'non vib', v: '10' },
+      { i: '1', n: 'vib', v: '56' },
     ],
+    init: '50',
     clr: '#A321DF',
+  },
+  {
+    cc: '21',
+    n: 'Vibrato',
+    r: [
+      { i: '0', n: 'non vib', v: '10' },
+      { i: '1', n: 'vib', v: '56' },
+    ],
+    init: '45',
+    clr: '#00DBA6',
   },
   {
     xy: [2, 4],
@@ -33,3 +40,5 @@ let cc = [
     clr: '#A321DF',
   },
 ]
+
+export default faders
