@@ -1,10 +1,12 @@
 <script>
   import XyPad from './components/XYPad.svelte'
   import Slider from './components/Slider.svelte'
-  import Button from './components/Button.svelte'
-  import { slider0, slider1, slider2 } from './components/slidervalues'
+  // import Button from './components/Button.svelte'
+  import ButtonAlt from './components/ButtonAlt.svelte'
+  import { selectedArt, slider0, slider1, slider2, slider3, slider4, slider5 } from './components/slidervalues'
   import faders from './ccdata'
-  let cats = [
+  import { get, writable } from 'svelte/store'
+  let articulations = [
     { name: 'Legato', color: '#59BB1D' },
     { name: 'Staccato', color: '#9347AD' },
     { name: 'Spiccato', color: '#B15704' },
@@ -19,31 +21,34 @@
     { name: 'Trill (Minor 2nd)', color: '#BB1D1D' },
     { name: 'Tremolo', color: '#00634B' },
   ]
-
-  let selectedArt = null
-  let currentvalue
-  let onValueChange = ''
-  $: console.log('Articulation selected', selectedArt)
+  let sliderArray = [slider0, slider1, slider2, slider3, slider4, slider5]
 
   function transmitCurrentValues() {
     // console.log('Yo' + currentvalue)
-    console.log(`Fader 1 ${$slider0} Fader 2 ${$slider1} Fader 3 ${$slider2}`)
-  }
 
-  // onValueChange={() => transmitCurrentValues(currentvalue)}
+    // console.log(`Fader 1 ${$slider0} Fader 2 ${$slider1} Fader 3 ${$slider2} Fader 4 ${$slider3}`)
+    for (var i = 0; i < faders.length; i++) {
+      if (faders[i].cc != undefined) {
+        // console.log(`Fader ${i} = ${sliderArray[i]}`)
+        console.log(`Fader ${i} = ${get(sliderArray[i])}`)
+      }
+    }
+  }
 </script>
 
 <div class="header">Vln 1 Longs [SSS] - (SSS Vln1 Longs.dpartmap)</div>
 <div class="grid">
   <div class="buttongrid">
-    {#each cats as { name, color }, i}
+    <!-- {#each articulations as { name, color }, i}
       <div class="buttonwrap" class:selected={i === selectedArt} on:click={() => (selectedArt = i)}>
         <Button {name} {color} />
+        
       </div>
-    {/each}
+    {/each} -->
+
+    <ButtonAlt {articulations} />
   </div>
   <div class="controllergrid">
-    <div class="transmitbutton" on:click={transmitCurrentValues}>Transmit current values</div>
     <div class="fadergrid">
       {#each faders as { cc, name, range, init, clr }, i}
         {#if cc != undefined}
@@ -51,6 +56,7 @@
         {/if}
       {/each}
     </div>
+    <div class="transmitbutton" on:click={transmitCurrentValues}>Transmit current values</div>
     <!-- <XyPad /> -->
     {#each faders as { xy, name, range, clr }, i}
       {#if xy != undefined}
@@ -60,7 +66,7 @@
   </div>
 </div>
 
-<div>{$slider0} {$slider1}</div>
+<div>{$slider0} {$slider1} {$slider2} {$selectedArt}</div>
 
 <style>
   :global(body) {
@@ -89,11 +95,16 @@
     height: calc(100vh - 40px);
     display: flex;
     flex-direction: column;
+
     justify-content: flex-end;
   }
   .fadergrid {
     touch-action: none;
     display: flex;
+    flex-basis: 25%;
+    width: 300px;
+    flex-wrap: wrap-reverse;
+    height: 354px;
     justify-content: flex-end;
   }
   .buttongrid {
@@ -104,15 +115,8 @@
     justify-content: flex-start;
     flex-wrap: wrap-reverse;
     align-content: flex-start;
-    /*  margin: 5px; */
-  }
-  .buttonwrap {
     /* margin: 5px; */
-    padding: 10px;
-
-    /* position: relative; */
   }
-
   .transmitbutton {
     box-sizing: content-box;
     background-color: #434343;
@@ -132,13 +136,5 @@
   }
   .transmitbutton:active {
     background-color: #232323;
-  }
-  .selected {
-    background-color: rgba(193, 17, 17, 1);
-    border-radius: 13px;
-    transition: 0.5s all;
-    /* box-shadow: 0px 0px 0px 2px rgba(119, 255, 0, 1); */
-    /* white-space: nowrap; */
-    /* overflow: visible; */
   }
 </style>

@@ -34,6 +34,14 @@ let faders = [
     clr: '#00DBA6',
   },
   {
+    cc: '16',
+    n: 'Speed',
+    r: [],
+    init: '72',
+    clr: '#EBFF00',
+  },
+
+  {
     xy: [2, 4],
     n: ['Breath', 'Slide'],
     r: [],

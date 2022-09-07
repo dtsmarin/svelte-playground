@@ -27,10 +27,24 @@
     // map(vavalueb, 0, 127, 50, 350)
     // vavalueb = 150
     vavalueb = converted
+
     yText = Math.round(map(converted, 150, -150, 0, 127))
     // console.log(vavalueb)
     // console.log(y)
     // console.log(y)
+    if (index === 0) {
+      slider0.set(Math.round(map(converted, 150, -150, 0, 127)))
+    } else if (index === 1) {
+      slider1.set(Math.round(map(converted, 150, -150, 0, 127)))
+    } else if (index === 2) {
+      slider2.set(Math.round(map(converted, 150, -150, 0, 127)))
+    } else if (index === 3) {
+      slider3.set(Math.round(map(converted, 150, -150, 0, 127)))
+    } else if (index === 4) {
+      slider4.set(Math.round(map(converted, 150, -150, 0, 127)))
+    } else if (index === 5) {
+      slider5.set(Math.round(map(converted, 150, -150, 0, 127)))
+    }
   })
 
   function handleTouch() {
@@ -59,6 +73,10 @@
       slider2.set(Math.round(map(y, 150, -150, 0, 127)))
     } else if (index === 3) {
       slider3.set(Math.round(map(y, 150, -150, 0, 127)))
+    } else if (index === 4) {
+      slider4.set(Math.round(map(y, 150, -150, 0, 127)))
+    } else if (index === 5) {
+      slider5.set(Math.round(map(y, 150, -150, 0, 127)))
     }
   }
 </script>
