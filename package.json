@@ -17,6 +17,8 @@
   },
   "dependencies": {
     "svelte-hammer": "^0.1.7",
+    "svelte-icons-pack": "^2.0.0",
+    "svelte-media-query": "^1.1.2",
     "svelte-touch-to-mouse": "^1.0.0"
   }
 }

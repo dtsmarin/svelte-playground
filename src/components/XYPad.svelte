@@ -17,15 +17,13 @@
   })
 </script>
 
-<main>
-  <div class="background">
-    <div class="drag-area" bind:this={area} />
-    <Motion drag style={{ x, y }} dragConstraints={{ current: area }} dragElastic={0} let:motion>
-      <div class="box center unselectable" use:motion />
-    </Motion>
-    <div class="label">{xText},{yText}</div>
-  </div>
-</main>
+<div class="background">
+  <div class="drag-area" bind:this={area} />
+  <Motion drag style={{ x, y }} dragConstraints={{ current: area }} dragElastic={0} let:motion>
+    <div class="box center unselectable" use:motion />
+  </Motion>
+  <div class="label">{xText},{yText}</div>
+</div>
 
 <style>
   :global(*) {
@@ -53,6 +51,7 @@
     border-style: solid;
     border-width: 2px;
     box-shadow: 0px 0px 0px 8px rgba(0, 0, 0, 1);
+    z-index: 2;
   }
   .drag-area {
     /* opacity: 0.2; */

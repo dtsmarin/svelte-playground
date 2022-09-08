@@ -1,8 +1,12 @@
 <script>
+  import MediaQuery from 'svelte-media-query'
   import XyPad from './components/XYPad.svelte'
   import Slider from './components/Slider.svelte'
+  import SliderMini from './components/SliderMini.svelte'
   // import Button from './components/Button.svelte'
   import ButtonAlt from './components/ButtonAlt.svelte'
+  import RecordButton from './components/RecordButton.svelte'
+  import TransmitButton from './components/TransmitButton.svelte'
   import { selectedArt, slider0, slider1, slider2, slider3, slider4, slider5 } from './components/slidervalues'
   import faders from './ccdata'
   import { get, writable } from 'svelte/store'
@@ -19,7 +23,7 @@
     { name: 'Trill (Major 2nd)', color: '#FF00D6' },
     { name: 'Trill (Major 3rd)', color: '#30B700' },
     { name: 'Trill (Minor 2nd)', color: '#BB1D1D' },
-    { name: 'Tremolo', color: '#00634B' },
+    { name: 'Tremolo CS', color: '#00634B' },
   ]
   let sliderArray = [slider0, slider1, slider2, slider3, slider4, slider5]
 
@@ -38,7 +42,7 @@
 
 <div class="header">Vln 1 Longs [SSS] - (SSS Vln1 Longs.dpartmap)</div>
 <div class="grid">
-  <div class="buttongrid">
+  <div class="articulationgrid">
     <!-- {#each articulations as { name, color }, i}
       <div class="buttonwrap" class:selected={i === selectedArt} on:click={() => (selectedArt = i)}>
         <Button {name} {color} />
@@ -50,24 +54,34 @@
   </div>
   <div class="controllergrid">
     <div class="fadergrid">
-      {#each faders as { cc, name, range, init, clr }, i}
+      {#each faders as { cc, n, range, init, clr }, i}
         {#if cc != undefined}
-          <Slider value={init} color={clr} index={i} />
+          <MediaQuery query="(min-height: 1100px)" let:matches>
+            {#if matches}
+              <Slider value={init} controller={cc} name={n} color={clr} index={i} />
+            {:else}
+              <SliderMini value={init} controller={cc} name={n} color={clr} index={i} />
+            {/if}
+          </MediaQuery>
         {/if}
       {/each}
     </div>
-    <div class="transmitbutton" on:click={transmitCurrentValues}>Transmit current values</div>
+
     <!-- <XyPad /> -->
     {#each faders as { xy, name, range, clr }, i}
       {#if xy != undefined}
         <XyPad />
       {/if}
     {/each}
+    <div class="buttongrid">
+      <div class="transmitbutton" on:click={transmitCurrentValues}>Transmit current values</div>
+      <RecordButton />
+      <TransmitButton />
+    </div>
   </div>
 </div>
 
-<div>{$slider0} {$slider1} {$slider2} {$selectedArt}</div>
-
+<!-- <div>{$slider0} {$slider1} {$slider2} {$selectedArt}</div> -->
 <style>
   :global(body) {
     background-color: #000000;
@@ -107,7 +121,7 @@
     height: 354px;
     justify-content: flex-end;
   }
-  .buttongrid {
+  .articulationgrid {
     touch-action: none;
     width: calc(100% - 300px);
     height: 100%;
@@ -117,11 +131,22 @@
     align-content: flex-start;
     /* margin: 5px; */
   }
+  .buttongrid {
+    touch-action: none;
+    /* width: calc(100% - 300px); */
+    width: 300px;
+    height: 75px;
+    display: flex;
+    justify-content: flex-start;
+    /* flex-wrap: wrap-reverse; */
+    align-content: flex-start;
+    /* margin: 5px; */
+  }
   .transmitbutton {
-    box-sizing: content-box;
-    background-color: #434343;
+    /* box-sizing: content-box; */
+    background-color: #1a1a1a;
     width: 150px;
-    height: 50px;
+    height: 75px;
     font-weight: bold;
     border-radius: 8px;
     border: solid 2px #9c9c9c;

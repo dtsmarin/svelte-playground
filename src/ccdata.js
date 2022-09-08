@@ -10,7 +10,7 @@ let faders = [
     cc: '11',
     n: 'Expression',
     r: [],
-    init: '80',
+    init: '102',
     clr: '#DF4C21',
   },
   {

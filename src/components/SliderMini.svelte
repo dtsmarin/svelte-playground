@@ -12,14 +12,14 @@
   export let index
   export let name
   export let controller
-  let converted = map(value, 0, 127, 150, -150)
+  let converted = map(value, 0, 127, 113, -113)
   let y = useMotionValue(converted)
   let vavalueb
   const input = [0, 127]
 
   // $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
   // map(vavalue, 125, -125, 75, 325)
-  $: yText = clamp(Math.round(map($y, 150, -150, 0, 127)), 0, 127) || 0
+  $: yText = clamp(Math.round(map($y, 113, -113, 0, 127)), 0, 127) || 0
   // $: vavalue = map($y, 125, -125, 0, 127) || 0
   // $: vavalueb = map($y, 150, -150, 0, 127)
   //  on:click={handleTouch}
@@ -30,22 +30,22 @@
     // vavalueb = 150
     vavalueb = converted
 
-    yText = Math.round(map(converted, 150, -150, 0, 127))
+    yText = Math.round(map(converted, 113, -113, 0, 127))
     // console.log(vavalueb)
     // console.log(y)
     // console.log(y)
     if (index === 0) {
-      slider0.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider0.set(Math.round(map(converted, 113, -113, 0, 127)))
     } else if (index === 1) {
-      slider1.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider1.set(Math.round(map(converted, 113, -113, 0, 127)))
     } else if (index === 2) {
-      slider2.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider2.set(Math.round(map(converted, 113, -113, 0, 127)))
     } else if (index === 3) {
-      slider3.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider3.set(Math.round(map(converted, 113, -113, 0, 127)))
     } else if (index === 4) {
-      slider4.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider4.set(Math.round(map(converted, 113, -113, 0, 127)))
     } else if (index === 5) {
-      slider5.set(Math.round(map(converted, 150, -150, 0, 127)))
+      slider5.set(Math.round(map(converted, 113, -113, 0, 127)))
     }
   })
 
@@ -61,58 +61,27 @@
     // console.log('You tapped the pip!')
     vavalueb = converted
     y = useMotionValue(converted)
-    yText = Math.round(map(converted, 150, -150, 0, 127))
+    yText = Math.round(map(converted, 113, -113, 0, 127))
     //here will transmit to socket.IO
     updateStores(index, converted)
   }
 
   function updateStores(index, y) {
     if (index === 0) {
-      slider0.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider0.set(Math.round(map(y, 113, -113, 0, 127)))
     } else if (index === 1) {
-      slider1.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider1.set(Math.round(map(y, 113, -113, 0, 127)))
     } else if (index === 2) {
-      slider2.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider2.set(Math.round(map(y, 113, -113, 0, 127)))
     } else if (index === 3) {
-      slider3.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider3.set(Math.round(map(y, 113, -113, 0, 127)))
     } else if (index === 4) {
-      slider4.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider4.set(Math.round(map(y, 113, -113, 0, 127)))
     } else if (index === 5) {
-      slider5.set(Math.round(map(y, 150, -150, 0, 127)))
+      slider5.set(Math.round(map(y, 113, -133, 0, 127)))
     }
   }
 </script>
-
-<!-- <div class="background">
-  <div class="drag-area" bind:this={area} />
-  <Motion
-    drag
-    style={{ y }}
-    dragConstraints={{ current: area }}
-    dragDirectionLock={true}
-    dragMomentum={false}
-    dragElastic={false}
-    let:motion
-    whileDrag={handleTouch}
-    onDrag={() => {
-      updateStores(index, $y)
-    }}
-    whileTap={{ backgroundColor: '#222222' }}
-  >
-    <div class="box center unselectable" use:motion>
-      <div class="label">{yText}</div>
-    </div>
-  </Motion>
-  <div class="sliderbar" style="--minvalue:{map(vavalueb, 150, -150, 50, 349)}px;  background-color:{color}" />
-  <div
-    class="defaultpip"
-    style="--startpip:{map(value, 0, 127, 20, 320)}px"
-    use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
-    on:tap={() => {
-      handleTap(index)
-    }}
-  />
-  <div class="name">{name} (CC{controller})</div> -->
 
 <div class="background">
   <div class="drag-area" bind:this={area} />
@@ -134,10 +103,10 @@
       <div class="label">{yText}</div>
     </div>
   </Motion>
-  <div class="sliderbar" style="--minvalue:{map(vavalueb, 150, -150, 50, 349)}px;  background-color:{color}" />
+  <div class="sliderbar" style="--minvalue:{map(vavalueb, 113, -113, 50, 275)}px;  background-color:{color}" />
   <div
     class="defaultpip"
-    style="--startpip:{map(value, 0, 127, 20, 320)}px"
+    style="--startpip:{map(value, 0, 127, 20, 245)}px"
     use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
     on:tap={() => {
       handleTap(index)
@@ -152,7 +121,7 @@
     background-color: #231d2a;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    height: 280px;
     border-radius: 9px;
     justify-content: center;
     align-items: center;
@@ -175,7 +144,7 @@
     background: #434343;
     /* position: absolute; */
     width: 70px;
-    height: 350px;
+    height: 280px;
     border-radius: 9px;
     touch-action: none;
     --webkit-touch-action: none;

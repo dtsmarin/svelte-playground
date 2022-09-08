@@ -47,7 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.5s;
+    transition: all 0.3s;
     position: relative;
   }
   .button {
@@ -62,7 +62,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.5s;
+    transition: all 0.3s;
     box-shadow: inset 0px 0px 0px 2px rgba(156, 156, 156, 0);
     border: solid 2px #9c9c9c;
   }
