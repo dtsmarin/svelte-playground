@@ -3,6 +3,7 @@
   import { onMount } from 'svelte'
   import svelteHammer from 'svelte-hammer'
   import { slider0, slider1, slider2, slider3, slider4, slider5 } from './slidervalues'
+  import { sliderArray } from './sliderarray'
   import { loop_guard } from 'svelte/internal'
   const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
@@ -24,6 +25,7 @@
   // $: vavalueb = map($y, 150, -150, 0, 127)
   //  on:click={handleTouch}
   $: vavalueb = $y
+
   onMount(() => {
     // let vavalueb = map($y, 150, -150, 150, -150)
     // map(vavalueb, 0, 127, 50, 350)
@@ -34,19 +36,27 @@
     // console.log(vavalueb)
     // console.log(y)
     // console.log(y)
-    if (index === 0) {
-      slider0.set(Math.round(map(converted, 113, -113, 0, 127)))
-    } else if (index === 1) {
-      slider1.set(Math.round(map(converted, 113, -113, 0, 127)))
-    } else if (index === 2) {
-      slider2.set(Math.round(map(converted, 113, -113, 0, 127)))
-    } else if (index === 3) {
-      slider3.set(Math.round(map(converted, 113, -113, 0, 127)))
-    } else if (index === 4) {
-      slider4.set(Math.round(map(converted, 113, -113, 0, 127)))
-    } else if (index === 5) {
-      slider5.set(Math.round(map(converted, 113, -113, 0, 127)))
-    }
+    // if (index === 0) {
+    //   slider0.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // } else if (index === 1) {
+    //   slider1.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // } else if (index === 2) {
+    //   slider2.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // } else if (index === 3) {
+    //   slider3.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // } else if (index === 4) {
+    //   slider4.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // } else if (index === 5) {
+    //   slider5.set(Math.round(map(converted, 113, -113, 0, 127)))
+    // }
+
+    // sliderArray[index].value.set(Math.round(map(converted, 113, -113, 0, 127)))
+
+    // $sliderArray[index].value.set(2)
+    // console.log(Object.values($sliderArray[index])[1])
+    // let slidervalue = Object.values(sliderArray[index])[1]
+    // console.log(index)
+    $sliderArray[index].value.set(Math.round(map(converted, 113, -113, 0, 127)))
   })
 
   function handleTouch() {
@@ -67,19 +77,21 @@
   }
 
   function updateStores(index, y) {
-    if (index === 0) {
-      slider0.set(Math.round(map(y, 113, -113, 0, 127)))
-    } else if (index === 1) {
-      slider1.set(Math.round(map(y, 113, -113, 0, 127)))
-    } else if (index === 2) {
-      slider2.set(Math.round(map(y, 113, -113, 0, 127)))
-    } else if (index === 3) {
-      slider3.set(Math.round(map(y, 113, -113, 0, 127)))
-    } else if (index === 4) {
-      slider4.set(Math.round(map(y, 113, -113, 0, 127)))
-    } else if (index === 5) {
-      slider5.set(Math.round(map(y, 113, -133, 0, 127)))
-    }
+    // if (index === 0) {
+    //   slider0.set(Math.round(map(y, 113, -113, 0, 127)))
+    // } else if (index === 1) {
+    //   slider1.set(Math.round(map(y, 113, -113, 0, 127)))
+    // } else if (index === 2) {
+    //   slider2.set(Math.round(map(y, 113, -113, 0, 127)))
+    // } else if (index === 3) {
+    //   slider3.set(Math.round(map(y, 113, -113, 0, 127)))
+    // } else if (index === 4) {
+    //   slider4.set(Math.round(map(y, 113, -113, 0, 127)))
+    // } else if (index === 5) {
+    //   slider5.set(Math.round(map(y, 113, -133, 0, 127)))
+    // }
+
+    $sliderArray[index].value.set(Math.round(map(y, 113, -113, 0, 127)))
   }
 </script>
 
@@ -145,7 +157,7 @@
     /* position: absolute; */
     width: 70px;
     height: 280px;
-    border-radius: 9px;
+    border-radius: 7px;
     touch-action: none;
     --webkit-touch-action: none;
   }
@@ -161,7 +173,7 @@
     z-index: 1;
     position: absolute;
     width: 70px;
-    border-radius: 8px 8px 4px 4px;
+    border-radius: 8px 8px 6px 6px;
     opacity: 0.25;
     bottom: 0px;
     height: var(--minvalue);
