@@ -1,11 +1,9 @@
 <script>
   //  on:tap={handleTap(index)}
-  import { Motion, useTransform, useMotionValue } from 'svelte-motion'
+  import { Motion, useMotionValue } from 'svelte-motion'
   import { onMount } from 'svelte'
   import svelteHammer from 'svelte-hammer'
-  import { slider0, slider1, slider2, slider3, slider4, slider5 } from './slidervalues'
   import { sliderArray } from './sliderarray'
-  import { loop_guard } from 'svelte/internal'
   const map = (value, x1, y1, x2, y2) => ((value - x1) * (y2 - x2)) / (y1 - x1) + x2
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
   let area
@@ -16,47 +14,13 @@
   export let controller
   let converted = map(value, 0, 127, 113, -113)
   let y = useMotionValue(converted)
-  let vavalueb
-  const input = [0, 127]
-
-  // $: xText = clamp(Math.round(map($x, -125, 125, 0, 127)), 0, 127) || 0
-  // map(vavalue, 125, -125, 75, 325)
+  let slidebarvalue
   $: yText = clamp(Math.round(map($y, 113, -113, 0, 127)), 0, 127) || 0
-  // $: vavalue = map($y, 125, -125, 0, 127) || 0
-  // $: vavalueb = map($y, 150, -150, 0, 127)
-  //  on:click={handleTouch}
-  $: vavalueb = $y
+  $: slidebarvalue = $y
 
   onMount(() => {
-    // let vavalueb = map($y, 150, -150, 150, -150)
-    // map(vavalueb, 0, 127, 50, 350)
-    // vavalueb = 150
-    vavalueb = converted
-
+    slidebarvalue = converted
     yText = Math.round(map(converted, 113, -113, 0, 127))
-    // console.log(vavalueb)
-    // console.log(y)
-    // console.log(y)
-    // if (index === 0) {
-    //   slider0.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // } else if (index === 1) {
-    //   slider1.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // } else if (index === 2) {
-    //   slider2.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // } else if (index === 3) {
-    //   slider3.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // } else if (index === 4) {
-    //   slider4.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // } else if (index === 5) {
-    //   slider5.set(Math.round(map(converted, 113, -113, 0, 127)))
-    // }
-
-    // sliderArray[index].value.set(Math.round(map(converted, 113, -113, 0, 127)))
-
-    // $sliderArray[index].value.set(2)
-    // console.log(Object.values($sliderArray[index])[1])
-    // let slidervalue = Object.values(sliderArray[index])[1]
-    // console.log(index)
     $sliderArray[index].value.set(Math.round(map(converted, 113, -113, 0, 127)))
   })
 
@@ -66,11 +30,9 @@
     // slider0.update(y)
   }
 
-  // slider0.set(Math.round(map($y, 150, -150, 0, 127)))
-
   function handleTap(index) {
     // console.log('You tapped the pip!')
-    vavalueb = converted
+    slidebarvalue = converted
     y = useMotionValue(converted)
     yText = Math.round(map(converted, 113, -113, 0, 127))
     //here will transmit to socket.IO
@@ -78,20 +40,6 @@
   }
 
   function updateStores(index, y) {
-    // if (index === 0) {
-    //   slider0.set(Math.round(map(y, 113, -113, 0, 127)))
-    // } else if (index === 1) {
-    //   slider1.set(Math.round(map(y, 113, -113, 0, 127)))
-    // } else if (index === 2) {
-    //   slider2.set(Math.round(map(y, 113, -113, 0, 127)))
-    // } else if (index === 3) {
-    //   slider3.set(Math.round(map(y, 113, -113, 0, 127)))
-    // } else if (index === 4) {
-    //   slider4.set(Math.round(map(y, 113, -113, 0, 127)))
-    // } else if (index === 5) {
-    //   slider5.set(Math.round(map(y, 113, -133, 0, 127)))
-    // }
-
     $sliderArray[index].value.set(Math.round(map(y, 113, -113, 0, 127)))
   }
 
@@ -121,7 +69,7 @@
       <div class="label">{yText}</div>
     </div>
   </Motion>
-  <div class="sliderbar" style="--minvalue:{map(vavalueb, 113, -113, 50, 275)}px;  background-color:{color}" />
+  <div class="sliderbar" style="--minvalue:{map(slidebarvalue, 113, -113, 50, 275)}px;  background-color:{color}" />
   <div
     class="defaultpip"
     style="--startpip:{map(value, 0, 127, 20, 245)}px"
