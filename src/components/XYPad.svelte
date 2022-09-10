@@ -19,7 +19,7 @@
 
 <div class="background">
   <div class="drag-area" bind:this={area} />
-  <Motion drag style={{ x, y }} dragConstraints={{ current: area }} dragElastic={0} let:motion>
+  <Motion drag style={{ x, y }} dragConstraints={{ current: area }} dragMomentum={false} dragElastic={false} let:motion>
     <div class="box center unselectable" use:motion />
   </Motion>
   <div class="label">{xText},{yText}</div>

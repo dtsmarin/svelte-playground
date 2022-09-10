@@ -1,4 +1,5 @@
 <script>
+  //  on:tap={handleTap(index)}
   import { Motion, useTransform, useMotionValue } from 'svelte-motion'
   import { onMount } from 'svelte'
   import svelteHammer from 'svelte-hammer'
@@ -61,7 +62,7 @@
 
   function handleTouch() {
     // console.log(y)
-    console.log(vavalueb)
+    // console.log(vavalueb)
     // slider0.update(y)
   }
 
@@ -93,6 +94,11 @@
 
     $sliderArray[index].value.set(Math.round(map(y, 113, -113, 0, 127)))
   }
+
+  function touchevent(e) {
+    console.log(e.changedTouches[0].identifier)
+    console.log(e.changedTouches[0].clientY)
+  }
 </script>
 
 <div class="background">
@@ -105,13 +111,13 @@
     dragMomentum={false}
     dragElastic={false}
     let:motion
-    whileDrag={handleTouch}
     onDrag={() => {
       updateStores(index, $y)
+      handleTouch()
     }}
     whileTap={{ backgroundColor: '#222222' }}
   >
-    <div class="box center unselectable" use:motion>
+    <div class="box center unselectable" use:motion on:touchmove={touchevent}>
       <div class="label">{yText}</div>
     </div>
   </Motion>
@@ -120,7 +126,7 @@
     class="defaultpip"
     style="--startpip:{map(value, 0, 127, 20, 245)}px"
     use:svelteHammer.tap={{ event: 'tap', taps: 1 }}
-    on:tap={() => {
+    on:click={() => {
       handleTap(index)
     }}
   />
@@ -205,7 +211,7 @@
   }
   .name {
     position: absolute;
-    z-index: 0;
+    z-index: 2;
     left: calc(100% - 1.2em);
     bottom: -0.8em;
     font-size: 1em;
